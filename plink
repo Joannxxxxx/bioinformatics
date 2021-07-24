@@ -26,7 +26,7 @@ convert to R
 
 
 # load package rMVP
-# rMVP link foe more details [https://github.com/xiaolei-lab/rMVP#pca-plot]
+# rMVP link for more details [https://github.com/xiaolei-lab/rMVP#pca-plot]
 library(rMVP)
 
 # prepare genotype data
