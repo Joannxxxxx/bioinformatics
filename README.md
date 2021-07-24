@@ -1,1 +1,1 @@
-specific materials including dataset and code related to GWAS
+specific code related to GWAS
