@@ -3,6 +3,12 @@
 in linux
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+# convert file bed&bim&fam to vcf
+# plink --bfile file --export vcf --out data
+
+# select chromosome
+# plink --bfile data --chr 1,2,3,4 --make-bed --out chr
+
 # id-mapping
 plink --bfile file --keep-fam id.txt --make-bed --out data
 
