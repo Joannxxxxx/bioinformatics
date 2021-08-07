@@ -4,7 +4,7 @@ configure: error: cannot run C compiled programs
 
 **解决方法** ./configure --host=arm
 
-### E02
+### E02 未解决
 安装 PopLDdecay 时运行 Make 报错
 ld: symbol(s) not found for architecture x86_64
 clang-4.0: error: linker command failed with exit code 1 (use -v to see invocation)
