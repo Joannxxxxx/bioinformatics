@@ -1,0 +1,4 @@
+#############################################################
+运行 ./configure 时报错 configure: error: cannot run C compiled programs
+解决方法 ./configure --host=arm
+
