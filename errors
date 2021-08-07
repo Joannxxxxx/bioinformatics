@@ -1,4 +1,16 @@
-#############################################################
-运行 ./configure 时报错 configure: error: cannot run C compiled programs
+##########################################################################
+运行 ./configure 时报错 
+configure: error: cannot run C compiled programs
+
 解决方法 ./configure --host=arm
+
+##########################################################################
+安装 PopLDdecay 时运行 Make 报错
+ld: symbol(s) not found for architecture x86_64
+clang-4.0: error: linker command failed with exit code 1 (use -v to see invocation)
+make[1]: *** [Makefile:272: PopLDdecay] Error 1
+make[1]: Leaving directory '/Users/sherlock/Downloads/PopLDdecay'
+make: *** [Makefile:178: all] Error 2
+
+解决方法 未知。或许是在 Makefile 文件修改编译方式，编译方式有 g++, clang, gcc 等。
 
