@@ -4,7 +4,7 @@ in linux
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 # convert file bed&bim&fam to vcf
-# plink --bfile file --export vcf --out data
+# plink --bfile file --export vcf-iid --out data
 
 # select chromosome
 # plink --bfile data --chr 1,2,3,4 --make-bed --out chr
