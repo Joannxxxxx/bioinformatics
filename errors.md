@@ -16,6 +16,8 @@ make: *** [Makefile:178: all] Error 2
 
 ### E03
 Permission denied 
+
 出现原因：没有权限进行读、写、创建文件、删除文件等操作。
+
 **解决方法** 输入命令 sudo chmod -R 777 /工作目录
 
