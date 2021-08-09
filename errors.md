@@ -17,10 +17,10 @@ make: *** [Makefile:178: all] Error 2<br>
 
 20210809 已解决。安装 LDBlockShow 出现同样问题，在开发者指导下，<br>
 首先在 src 文件夹第 30 行将编译方式 g++ 改为 g++ -std=c++11 或者 clang++，<br>
-然后将 14、15 行将路径 src/ 改为 ./ （即当前路径），<br>
+然后将 14、15 行的路径 src/ 改为 ./ （即当前路径），<br>
 最后运行 sh make.sh 即可<br>
 
-测试是否安装成功:<br>
+测试是否安装成功：<br>
 切换文件路径至 Example2，运行 sh run.sh 看结果<br>
 
 
