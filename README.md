@@ -9,7 +9,7 @@
 
 ### reference
 * [GWAS分析-说人话（20）-单倍体关联分析](https://www.jianshu.com/p/66262b7655bc)
-* []()
+* [Homebrew更新相关小技巧](https://blog.chaosjohn.com/Homebrew-upgrade.html)
 * []()
 * []()
 * []()
