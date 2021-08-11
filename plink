@@ -74,3 +74,23 @@ for(i in 2:ncol(phenotype)){
   )
   gc()
 }
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+in linux
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# convert binary file into vcf file
+plink --bfile data_pruned --export vcf-iid --out data_pv
+
+# apply PopLDdecay to calculate LD decay
+# note that you should use PopLDdecay's absolute path
+~/PopLDdecay/bin/PopLDdecay -InVCF data_pv.vcf -OutStat LD
+
+# plot
+~/software/PopLDdecay/bin/Plot_OnePop.pl -InFile LD.stat -output LDdecay
+
+# apply LDBlockShow to find candidate gene
+# note that you should use LDBlockShow's absolute path
+~/LDBlockShow/bin/LDBlockShow -InVCF data_pv.vcf -Region 2:2000-10000 -OutPut block -OutPng
+
+
+
+
