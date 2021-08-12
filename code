@@ -3,7 +3,7 @@
 in terminal
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-# convert file bed&bim&fam to vcf
+# convert file ‘bed + bim + fam’ file format to vcf format
 # plink --bfile file --export vcf-iid --out data
 
 # select chromosome
