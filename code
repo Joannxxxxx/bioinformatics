@@ -93,6 +93,23 @@ plink --bfile data_pruned --export vcf-iid --out data_pv
 # note that pvalue.csv has to sep by '\t' and no header, see details in LDBlockShow's Example file
 ~/LDBlockShow/bin/LDBlockShow -InVCF data_pv.vcf -Region 2:2000-10000 -InGWAS pvalue.csv -InGFF file.gff3 -OutPut block -OutPng
 
+# select significant region for haplotype
+plink --bfile data_pruned --chr 8 --from-kb 1000 --to-kb 2000 —make-bed —out data_chr8
+
+# add phenotype column
+# note that the header of phenotype.txt should be : fid iid pheno1 pheno2 …
+plink --bfile data_chr8 --pheno phenotype.txt --mpheno 1 --make-bed --out data_hap
+
+# haplotype analysis
+plink --bfile data_hap --hap-window 3,4,5 --hap-assoc
+
+Error: The --hap... family of flags has not been reimplemented in PLINK 1.9 due
+to poor phasing accuracy (and, consequently, inferior haplotype
+likelihood/frequency estimates) relative to other software; for now, we
+recommend using BEAGLE instead of PLINK for case/control haplotype association
+analysis.  (You can use "--recode beagle" to export data.)  We apologize for
+the inconvenience, and plan to develop variants of the --hap... flags which
+handle pre-phased data effectively.
 
 
 
