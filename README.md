@@ -10,6 +10,7 @@
 ### reference
 * [如何理解GWAS中Manhattan plot和QQ plot所传递的信息](https://mp.weixin.qq.com/s/93gm-TsWEamML-ghBzFSPg)
 * [单倍型分析软件Haploview的导入格式及使用](https://cloud.tencent.com/developer/article/1613753)
+* [plink](http://zzz.bwh.harvard.edu/plink/dataman.shtml)
 * [连锁不平衡：linkage disequilibrium](https://cloud.tencent.com/developer/article/1625934)
 * [SNP问题大集锦](https://www.cnblogs.com/wangprince2017/p/9815380.html)
 * [【推荐】如何才能够免费获取Cell、Nature、Science等任意杂志中的文献](https://mp.weixin.qq.com/s/68xYwHcF8DBDx2y3JrnpZQ)
