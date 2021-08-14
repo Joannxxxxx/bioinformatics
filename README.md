@@ -15,7 +15,7 @@
 * [plink](http://zzz.bwh.harvard.edu/plink/dataman.shtml)
 * [连锁不平衡：linkage disequilibrium](https://cloud.tencent.com/developer/article/1625934)
 * [SNP问题大集锦](https://www.cnblogs.com/wangprince2017/p/9815380.html)
-* [【推荐】如何才能够免费获取Cell、Nature、Science等任意杂志中的文献](https://mp.weixin.qq.com/s/68xYwHcF8DBDx2y3JrnpZQ)
+* [sci-hub](https://sci-hub.st/)
 * [GWAS分析-说人话（20）-单倍体关联分析](https://www.jianshu.com/p/66262b7655bc)
 * [Homebrew更新相关小技巧](https://blog.chaosjohn.com/Homebrew-upgrade.html)
 * 
