@@ -5,7 +5,7 @@
 背景：所有点都未通过 Bonferroni 阈值，因此进行阈值校正，以便进行下一步分析。GWAS 结果中最小 Pvalue 为 1.5E-7，进行 -log10() 转换后的 value（以下简称 log value）为 6.8，而 Bonferroni 的阈值是 9E-8（即 0.05/549008，其中 549008 为此次分析的 SNP 数量）log value 为7。<br>
 
 两种 relaxed threshold：<br>
-1、常见的阈值，pavlue = 5E-5 即 log value = 4.3。在这个阈值下共有 105 个点，分布情况如下：<br>
+1、常见的阈值，Pvalue = 5E-5 即 log value = 4.3。在这个阈值下共有 105 个点，分布情况如下：<br>
 chr   number
 8     77
 7      7
