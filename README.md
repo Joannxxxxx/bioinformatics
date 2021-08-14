@@ -9,6 +9,7 @@
 
 ### reference
 * [如何理解GWAS中Manhattan plot和QQ plot所传递的信息](https://mp.weixin.qq.com/s/93gm-TsWEamML-ghBzFSPg)
+* [FDR-P值是什么东西！](https://www.jianshu.com/p/949626b18e69)
 * [基于Vcf文件进行基因单倍型分析](https://www.jianshu.com/p/89e45a330de5)
 * [单倍型分析软件Haploview的导入格式及使用](https://cloud.tencent.com/developer/article/1613753)
 * [plink](http://zzz.bwh.harvard.edu/plink/dataman.shtml)
