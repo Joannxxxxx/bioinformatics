@@ -90,7 +90,7 @@ plink --bfile data_pruned --export vcf-iid --out data_pv
 
 # apply LDBlockShow to find candidate gene
 # note that you should use LDBlockShow's absolute path
-# note that pvalue.csv has to sep by '\t' and no header, see details in LDBlockShow's Example file
+# note that pvalue.csv has to sep by '\t' and no header, format is [chr pos pvalue], see details in LDBlockShow's Example file
 ~/LDBlockShow/bin/LDBlockShow -InVCF data_pv.vcf -Region 2:2000-10000 -InGWAS pvalue.csv -InGFF file.gff3 -OutPut block -OutPng
 
 # select significant region for haplotype
