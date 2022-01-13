@@ -115,3 +115,8 @@ handle pre-phased data effectively.
 
 plink --bfile mydata --snp rs652423 --window 20
 #which extracts only SNPs within +/- 20kb of rs652423.
+
+
+# 若输入格式为 vcf
+# plink --vcf pruned.vcf --maf 0.05 --geno 0.6 --recode vcf-iid --out demo.filt --allow-extra-chr
+
