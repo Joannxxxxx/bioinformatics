@@ -1,4 +1,4 @@
-### peak2hap
+### qtl2hap
 主要内容：从 GWAS 获得结果后提取 qtl 获得候选基因  
 1、提取每条染色体上 pvalue 最小的前 N 个（比如前 30 个） snp - 生成前N个snp.sh，得到 chr$i.top30.txt 和 chr$i.top30.snp.txt 两个文件，前者是前 N 个 snp 的详细信息，包括 snp,chr,pos,pvalue，后者是前 N 个 snp 的简略信息，仅有 snp 名一列  
 2、分别在曼哈顿图上标出这些 snp，选择峰尖位置的 snp，若某些峰尖被上一步遗漏，再回到上一步提取特定区域的 top snp，形成 chr$i.add.txt 和 chr$i.add.snp.txt  - 2对前N个snp逐一画曼哈顿图.sh，生成 qtl_snp.txt  
