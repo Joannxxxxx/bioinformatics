@@ -1,4 +1,9 @@
-## 1、解压测序文件
+## 写在前面
+1、文件夹结构
+2、需要安装的软件
+
+## 流程：从测序数据到表达矩阵
+### 1、解压测序文件
 一般测序获得数据为压缩格式，以 .gz 结尾，可以先作解压，也可以不做（第 2 步会说）。 
 ```
 # gz2fq.sh 脚本内容
@@ -23,7 +28,7 @@ vim gz2fq.sh # 创建脚本
 nohup sh gz2fq.sh 1>gz2fq.out 2>&1 & # 运行脚本
 ```
 
-## 2、检查数据质量
+### 2、检查数据质量
 fastqc 可以直接处理 gz 压缩文件，所以上一步的解压可以不做。  
 ```
 # fq2qc.sh 脚本内容
@@ -50,7 +55,7 @@ cd ../fq/fq_repo # 将工作路径切换到 fq_repo 文件夹
 multiqc ./ # 使用 multiqc 将所有 QC 报告合并为一个 html 以方便查看
 ```
 
-## 3、过滤并查看过滤后的数据质量  
+### 3、过滤并查看过滤后的数据质量  
 
 ```
 # fq2trim.sh 脚本内容
@@ -106,7 +111,7 @@ cd ../trim/trim_repo # 将工作路径切换到 trim_repo 文件夹
 multiqc ./ # 使用 multiqc 将所有 QC 报告合并为一个 html 以方便查看
 ```
 
-## 4、构建索引
+### 4、构建索引
 
 ```
 # build_index.sh 脚本内容
@@ -125,7 +130,7 @@ vim build_index.sh # 创建脚本
 nohup sh build_index.sh 1>build_index.out 2>&1 & # 运行脚本
 ```
 
-## 5、比对
+### 5、比对
 ```
 # hisat2_align.sh 脚本内容
 cd ../trim # 将工作路径切换到 trim 文件夹
@@ -153,7 +158,7 @@ vim hisat2_align.sh # 创建脚本
 nohup sh hisat2_align.sh 1>hisat2_align.out 2>&1 & # 运行脚本
 ```
 
-## 6、将 sam 文件转为 bam 文件
+### 6、将 sam 文件转为 bam 文件
 ```
 # sam2bam.sh 脚本内容
 cd .. # 切换到上级目录
@@ -175,7 +180,7 @@ vim sam2bam.sh # 创建脚本
 nohup sh sam2bam.sh 1>sam2bam.out 2>&1 & # 运行脚本
 ```
 
-## 7、计算表达矩阵
+### 7、计算表达矩阵
 ```
 cd bam # 将工作路径切换到 bam 文件夹
 # 计算表达矩阵
