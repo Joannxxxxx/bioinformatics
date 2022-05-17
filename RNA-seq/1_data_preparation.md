@@ -15,3 +15,32 @@ do
         gunzip -c $line > ../fq/$file
 done
 ```
+
+```
+cd scripts # 将工作路径切换到 scripts 文件夹
+vim gz2fq.sh # 创建脚本
+# 粘贴上述脚本内容，在英文输入模式下依次按 :wq 保存并退出
+nohup sh gz2fq.sh 1>gz2fq.out 2>&1 & # 运行脚本
+```
+
+## 2、检查数据质量
+fastqc 可以直接处理 gz 压缩文件，所以上一步的解压可以不做。  
+```
+# fq2qc.sh 脚本内容
+cd ../fq # 切换工作目录至 fq 文件夹
+mkdir fq_repo # 创建 fq_repo 以存放 qc 结果
+ls *.fq > fq_list # 将所有 fq 文件名做成一份列表
+
+# 对 fq 文件进行 qc 并把结果存放至 fq_repo 文件夹
+cat fq_list | while read line
+do
+    fastqc -o fq_repo -t 12 $line
+done
+```
+
+```
+cd scripts # 将工作路径切换到 scripts 文件夹
+vim fq2qc.sh # 创建脚本
+# 粘贴上述脚本内容，在英文输入模式下依次按 :wq 保存并退出
+nohup sh fq2qc.sh 1>fq2qc.out 2>&1 & # 运行脚本
+```
