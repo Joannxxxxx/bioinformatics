@@ -1,5 +1,6 @@
 ## 写在前面
 1、文件夹结构 
+```
 ├── 1_gz
 ├── 2_fq
 ├── 3_fq_repo
@@ -9,6 +10,7 @@
 ├── 7_bam
 ├── reference
 └── scripts
+```
 2、需要安装的软件 
 * fastqc
 * multicqc
