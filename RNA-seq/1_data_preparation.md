@@ -1,6 +1,21 @@
 ## 写在前面
-1、文件夹结构
-2、需要安装的软件
+1、文件夹结构 
+├── 1_gz
+├── 2_fq
+├── 3_fq_repo
+├── 4_trim
+├── 5_trim_repo
+├── 6_sam
+├── 7_bam
+├── reference
+└── scripts
+2、需要安装的软件 
+* fastqc
+* multicqc
+* trim_galore
+* hisat2
+* samtools
+* featureCounts
 
 ## 流程：从测序数据到表达矩阵
 ### 1、解压测序文件
