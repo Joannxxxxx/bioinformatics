@@ -64,4 +64,28 @@ done
 nohup sh hisat2_align.sh 1>hisat2_align.out 2>&1 & # 运行脚本
 ```
 
+### 4 把 sam 文件转为 bam 文件
+```
+# 把 trim 文件夹里的 sam 文件移到 sam 文件夹
+cd ../trim
+mkdir ../sam ../bam
+mv ./*.sam ../sam
+```
+
+```
+cd ../scripts
+vim sam2bam.sh
+
+# 按 i 键，粘贴入以下内容
+cd ../sam
+for file in ./* 
+do
+	samtools sort -o ../bam/${file%.*}.bam -O bam -@ 12 $file
+done
+# 在英文输入模式下依次按 :wq 保存并退出
+
+# 运行脚本
+nohup sh sam2bam.sh 1>sam2bam.out 2>&1 & 
+```
+
 
