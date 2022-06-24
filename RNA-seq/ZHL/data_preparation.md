@@ -88,4 +88,10 @@ done
 nohup sh sam2bam.sh 1>sam2bam.out 2>&1 & 
 ```
 
+### 5 计算表达矩阵
+```
+cd bam # 将工作路径切换到 bam 文件夹
 
+# 计算表达矩阵
+nohup featureCounts -T 12 -a ../../reference/Oryza_sativa.IRGSP-1.0.51.gtf -o sativa.expr.txt *.bam 1>featureCounts.out 2>&1 &
+```
