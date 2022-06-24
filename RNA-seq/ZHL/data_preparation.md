@@ -56,7 +56,7 @@ do
   fq2=${arr[1]}
   prefix=${fq1%%-*} # 截取第一个 - 符号前的字符作为文件名
   
-  hisat2 -p 12 -x ../reference/index/Oryza_sativa.IRGSP-1.0.51.gtf -1 $fq1 -2 $fq2 -S $prefix.sam
+  hisat2 -p 12 -x ../../reference/index/Oryza_sativa.IRGSP-1.0.51.gtf -1 $fq1 -2 $fq2 -S $prefix.sam
 done
 # 在英文输入模式下依次按 esc :wq 保存退出
 
