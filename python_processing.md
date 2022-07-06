@@ -126,12 +126,27 @@ def cluster_boxplot(data,savepath):
 ```
 
 ```python
+def data_standard(data):
+    """
+    标准化数据：减去均值再除以标准差
+    data：有 index 的 DataFrame
+    """  
+    from sklearn.preprocessing import scale
+    data_scaled = scale(data)
+    data_scaled = pd.DataFrame(data_scaled, columns=data.columns,index=data.index)
+    
+    return data_scaled
+```    
+
+```python
 def cluster_plt(data,savepath):
     """
     画聚类类别性状均值的折线图
-    data：index 为 cluster，列为性状均值的 DataFrame
+    data：经过标准化或其他 proprocessing 处理的 DataFrame，使不同量纲的数据处于可比范围
     savepath：图片保存的路径
     """  
+    data = data_standard(data)
+    
     import matplotlib.pyplot as plt
     colors = sns.color_palette() # 调色盘
     # 画每一行/类的折线图
@@ -142,5 +157,6 @@ def cluster_plt(data,savepath):
     
     plt.legend()    
     plt.ylabel('standardized_values', fontsize=16)
+    plt.xticks(fontsize=12,rotation=40)
     plt.savefig(savepath,bbox_inches = 'tight')
 ```
