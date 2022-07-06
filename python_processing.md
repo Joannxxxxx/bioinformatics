@@ -20,7 +20,7 @@ def write2excel(df,savepath,sheet_name):
     writer.close()
 ```
 
-```
+```python
 def plot_dend(data,savepath):
     """
     绘制层次聚类图
@@ -46,7 +46,7 @@ def plot_dend(data,savepath):
     plt.savefig(savepath)
 ```
 
-```
+```python
 def make_cluster(data,n_clusters):
     """
     聚类并将类别添加到 data 中为新一列
@@ -67,7 +67,7 @@ def make_cluster(data,n_clusters):
     return data
 ```
 
-```
+```python
 def cluster_mean(data):
     """
     对聚类后的类别计算每类的样本数和性状均值
