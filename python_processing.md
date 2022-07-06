@@ -124,3 +124,23 @@ def cluster_boxplot(data,savepath):
 
     plt.show()  
 ```
+
+```python
+def cluster_plt(data,savepath):
+    """
+    画聚类类别性状均值的折线图
+    data：index 为 cluster，列为性状均值的 DataFrame
+    savepath：图片保存的路径
+    """  
+    import matplotlib.pyplot as plt
+    colors = sns.color_palette() # 调色盘
+    # 画每一行/类的折线图
+    length = data.shape[0]
+    for i in range(length):
+        label = "cluster" + str(i+1)
+        plt.plot(data.columns,data.iloc[i],c=colors[i],label=label)
+    
+    plt.legend()    
+    plt.ylabel('standardized_values', fontsize=16)
+    plt.savefig(savepath,bbox_inches = 'tight')
+```
