@@ -1,3 +1,4 @@
+## 高粱数据分析
 ```python
 def write2excel(df,savepath,sheet_name):
     """
@@ -86,4 +87,40 @@ def cluster_mean(data):
     return data_cf
 ```
 
+```python
+def prebox(data):
+    """
+    画聚类类别箱线图之前的数据准备
+    data：index 是 cluster，中间列是变量/性状的 DataFrame
+    """  
+    from sklearn.preprocessing import scale
+    data_scaled = scale(data)
+    data_scaled = pd.DataFrame(data_scaled, columns=data.columns,index=data.index)
+    
+    data_scaled_stack = data_scaled.stack().reset_index()
+    data_scaled_stack.columns = ["cluster","traits","standardized_values"]
+    
+    return data_scaled_stack
+```
 
+```python
+def cluster_boxplot(data,savepath):
+    """
+    画聚类类别箱线图
+    data：经过 prebox 处理的 DataFrame
+    """  
+    from matplotlib.pyplot import figure
+    # figure(figsize=(20, 6), dpi=100)
+    figure(figsize=(20, 6))
+    ax = sns.boxplot(x="traits", y="standardized_values", hue="cluster",
+                       data=data, palette="Set2", dodge=True)
+    plt.xticks(fontsize=12,rotation=40)
+    plt.yticks(fontsize=12)
+
+    ax.set(xlabel=None)
+    ax.set_ylabel("standardized_values",fontsize=16)
+
+    plt.savefig(savepath,bbox_inches = 'tight')
+
+    plt.show()  
+```
