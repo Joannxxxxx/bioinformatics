@@ -1,6 +1,6 @@
 ## 高粱数据分析
 ```python
-def trais_hisgram(data,savepath):
+def traits_hisgram(data,savepath):
     """
     对每一个变量画分布图
     data：没有 index 只有变量 cols 的 DataFrame
