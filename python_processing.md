@@ -1,5 +1,40 @@
 ## 高粱数据分析
 ```python
+def trais_hisgram(data,savepath):
+    """
+    对每一个变量画分布图
+    data：没有 index 只有变量 cols 的 DataFrame
+    savepath：图片保存的路径，以斜杠结尾
+    """  
+        
+    import seaborn as sns
+    import matplotlib as mpl
+    import matplotlib.pyplot as plt
+    from pylab import mpl
+
+    # style set 这里只是一些简单的style设置
+    sns.set_style('darkgrid')
+    sns.set_context(rc={'figure.figsize': (5, 4) } )
+    
+    cols = data.columns.tolist()
+    for col in cols:
+
+        sns.rugplot(data[col])
+        plt.hist(data[col],alpha=0.5)
+
+        #添加描述信息
+        mpl.rcParams['font.sans-serif'] = ['SimHei'] # 指定默认字体
+        xlabel = col + "分布图"
+        plt.xlabel(xlabel,fontsize = 13)
+
+        # 保存
+        savename = savepath + col + ".png" 
+        plt.savefig(savename)
+
+        plt.show()
+```
+
+```python
 def write2excel(df,savepath,sheet_name):
     """
     将数据写入已存在的 excel 表
