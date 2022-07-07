@@ -35,6 +35,32 @@ def traits_hisgram(data,savepath):
 ```
 
 ```python
+def traits_boxplot(data,savepath):
+    """
+    对每一个变量箱线图图
+    data：没有 index 只有变量 cols 的 DataFrame
+    savepath：图片保存的路径，以斜杠结尾
+    """  
+    
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    from pylab import mpl
+    
+    sns.set_style('white')
+    
+    cols = data.columns.tolist()
+    for col in cols:
+        sns.boxplot(data[col],palette="Set2",showfliers=False)
+        sns.swarmplot(data[col],color=sns.color_palette("Set2")[1])
+    
+        mpl.rcParams['font.sans-serif'] = ['SimHei'] # 指定默认字体
+        savename = savepath + col + ".png" 
+        plt.savefig(savename)
+
+        plt.show()
+```
+
+```python
 def write2excel(df,savepath,sheet_name):
     """
     将数据写入已存在的 excel 表
