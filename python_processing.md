@@ -1,5 +1,18 @@
 ## 高粱数据分析
 ```python
+def df_describe(df):
+    """
+    得出描述性统计
+    df: 接收 pandas.DataFrame 数据格式
+    """      
+    des = df.describe().T # 初步的描述性统计结果
+    des["CV"] = 100 * des["std"]/ des["mean"] # 计算变异系数
+    des = des.drop(["25%","75%"],axis=1) # 删掉四分位点
+    des.columns = ["样本数","均值","标准差","最小值","中位数","最大值","变异系数 CV（%）"] # 进行中文命名
+    return des
+```
+
+```python
 def traits_hisgram(data,savepath):
     """
     对每一个变量画分布图
