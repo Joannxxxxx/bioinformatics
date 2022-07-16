@@ -1,5 +1,39 @@
 ## 高粱数据分析
 ```python
+    """
+    用 KNN 填充时选择最佳 K 值
+    data: 接收 pandas.DataFrame 数据格式
+    target: 用来当作因变量的变量
+    number: N 的最大取值
+    """    
+def optimize_k(data,target,number):
+    from sklearn.model_selection import train_test_split
+    from sklearn.ensemble import RandomForestRegressor
+    from sklearn.metrics import mean_squared_error
+    from sklearn.impute import KNNImputer
+    
+    rmse = lambda y, yhat: np.sqrt(mean_squared_error(y, yhat))
+
+    errors = []
+    for k in range(1, number, 1):
+        imputer = KNNImputer(n_neighbors=k)
+        imputed = imputer.fit_transform(data)
+        df_imputed = pd.DataFrame(imputed, columns=data.columns)
+        
+        X = df_imputed.drop(target, axis=1)
+        y = df_imputed[target]
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+        model = RandomForestRegressor()
+        model.fit(X_train, y_train)
+        preds = model.predict(X_test)
+        error = rmse(y_test, preds)
+        errors.append({'K': k, 'RMSE': error})
+        
+    return errors
+```
+
+```python
 def df_describe(df):
     """
     得出描述性统计
