@@ -2,7 +2,7 @@
 ```python
 def optimize_k(data,target,number):
     """
-    用 KNN 填充时选择最佳 K 值
+    用 KNN 填充缺失时选择最佳 K 值
     data: 接收 pandas.DataFrame 数据格式
     target: 用来当作因变量的变量
     number: N 的最大取值
