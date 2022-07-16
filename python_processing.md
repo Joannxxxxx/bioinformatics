@@ -234,6 +234,36 @@ def cluster_boxplot(data,savepath):
 ```
 
 ```python
+def traits_cluster_boxplot(data,savepath):
+    """
+    对每一个变量按照类别画箱线图
+    data：没有 index 只有变量 cols 的 DataFrame
+    savepath：图片保存的路径，以斜杠结尾
+    """  
+    
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    from pylab import mpl
+    
+    sns.set_style('white')
+    
+    cols = data.columns.tolist()
+    for col in cols[1:]:
+        sns.boxplot(x=data["cluster"],y=data[col],palette="Set2",showfliers=False)
+        sns.swarmplot(x=data["cluster"],y=data[col],palette="Set2")
+#         sns.swarmplot(x=data["cluster"],y=data[col],color=sns.color_palette("Set2")[1])
+    
+        mpl.rcParams['font.sans-serif'] = ['SimHei'] # 指定默认字体
+        
+        col = col.replace("/","sub")
+        savename = savepath + col + ".png" 
+        plt.savefig(savename)
+
+        plt.show()
+```
+
+
+```python
 def data_standard(data):
     """
     标准化数据：减去均值再除以标准差
