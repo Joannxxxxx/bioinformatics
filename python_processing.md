@@ -1,5 +1,19 @@
 ## 高粱数据分析
 ```python
+def col_row_missing(df):
+    """
+    统计行和列的缺失情况
+    df: 接收 pandas.DataFrame 数据格式，cols 都是变量
+    """   
+    rn = pd.DataFrame(df.isnull().sum(axis=1).sort_values(ascending=False))
+    rn.columns = ["缺失数"]
+    
+    cn = pd.DataFrame(df.isnull().sum().sort_values(ascending=False))
+    cn.columns = ["缺失数"]
+    return rn,cn
+```
+
+```python
 def optimize_k(data,target,number):
     """
     用 KNN 填充缺失时选择最佳 K 值
