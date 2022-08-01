@@ -48,16 +48,27 @@ def optimize_k(data,target,number):
 ```
 
 ```python
+# 20220729更新
 def df_describe(df):
     """
     得出描述性统计
-    df: 接收 pandas.DataFrame 数据格式
+    :df: 接收 pandas.DataFrame 数据格式
     """      
     des = df.describe().T # 初步的描述性统计结果
     des["CV"] = 100 * des["std"]/ des["mean"] # 计算变异系数
     des = des.drop(["25%","75%"],axis=1) # 删掉四分位点
-    des.columns = ["样本数","均值","标准差","最小值","中位数","最大值","变异系数 CV（%）"] # 进行中文命名
-    return des
+    
+    skew = pd.DataFrame(df.skew(),columns={"skew"}) # 偏度计算
+    kurt = pd.DataFrame(df.kurt(),columns={"kurt"}) # 峰度计算
+    sk = pd.concat([skew,kurt],axis=1)
+    
+    des_final = pd.concat([des,sk],axis=1)
+    
+    des_final.columns = ["样本数","均值","标准差",
+                   "最小值","中位数","最大值","变异系数 CV（%）",
+                  "偏度","峰度"] # 进行中文命名
+    
+    return des_final
 ```
 
 ```python
