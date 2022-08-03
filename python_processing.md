@@ -18,14 +18,12 @@ def save_boxplot(df,filepath):
     """
     绘制数据框每一列的箱线图
     df: 接收 pandas.DataFrame 数据格式，没有索引，每一列均为变量
-    filepath: 
+    filepath: 保存图片的文件夹路径，以斜杠结尾
     """  
     plt_config() # 设置画图的全局参数
     from matplotlib.font_manager import FontProperties 
     font = FontProperties(fname="/Library/Fonts/SimSun.ttc") # 设置局部字体
     
-    
-     
     cols = df.columns.tolist()  # 画图
     for col in cols:
         sns.boxplot(col,data=df,palette="Set2",showfliers=False)
@@ -35,7 +33,7 @@ def save_boxplot(df,filepath):
     
         col = col.replace('/', 'sub') # 把性状名中的斜杠换成英文，以免被系统认为是路径
         savepath = filepath + col + ".png" 
-        plt.savefig(savepath,bbox_inches = 'tight') # 保存图片
+        plt.savefig(savepath, bbox_inches = 'tight') # 保存图片
 
         plt.show() # 显示图片
 ```
