@@ -1,4 +1,17 @@
 ## 高粱数据分析
+
+```python
+def string_split(string):
+    """
+    分割 df 列中格式为 字符+数字 的元素，比如 F18 将被分割成 F 和 8
+    """  
+    import re
+    match = re.match(r"([a-z]+)([0-9]+)", string, re.I)
+    if match:
+        items = match.groups()
+    return(items)
+```
+
 ```python
 def col_row_missing(df):
     """
