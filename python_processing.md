@@ -1,4 +1,45 @@
 ## 高粱数据分析
+```python
+def plt_config():
+    """
+    设置画图的参数，包括字体、字号等
+    """  
+    config = {
+        "font.family": "serif",  # 使用衬线体
+#         "font.serif": ["SimHei"],  # 中易黑体
+#         "font.serif": ["SimSun"],  # 中易宋体，在我电脑上不行
+        "font.size": 25,  # 字号
+        "axes.unicode_minus": False, #  # 解决保存图像负号'-'显示为方块的问题
+        "mathtext.fontset": "stix",  # 设置 LaTeX 字体，stix 近似于 Times 字体
+        }
+    plt.rcParams.update(config)
+    
+def save_boxplot(df,filepath):
+    """
+    绘制数据框每一列的箱线图
+    df: 接收 pandas.DataFrame 数据格式，没有索引，每一列均为变量
+    filepath: 
+    """  
+    plt_config() # 设置画图的全局参数
+    from matplotlib.font_manager import FontProperties 
+    font = FontProperties(fname="/Library/Fonts/SimSun.ttc") # 设置局部字体
+    
+    
+     
+    cols = df.columns.tolist()  # 画图
+    for col in cols:
+        sns.boxplot(col,data=df,palette="Set2",showfliers=False)
+        sns.swarmplot(col,data=df,color=sns.color_palette("Set2")[1])
+        
+        plt.xlabel(col,fontproperties=font) # 设置 xlabel 字体
+    
+        col = col.replace('/', 'sub') # 把性状名中的斜杠换成英文，以免被系统认为是路径
+        savepath = filepath + col + ".png" 
+        plt.savefig(savepath,bbox_inches = 'tight') # 保存图片
+
+        plt.show() # 显示图片
+```
+
 
 ```python
 def string_split(string):
