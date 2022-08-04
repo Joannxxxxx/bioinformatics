@@ -1,5 +1,21 @@
 ## 高粱数据分析
 ```python
+def row_col_missing(df):
+    """
+    查看数据框行方向和列方向上的缺失情况
+    df: 接收 pandas.DataFrame 数据格式，索引为样本，列为性状（一般来说）
+    """ 
+    rn = pd.DataFrame(df.isnull().sum(axis=1).sort_values(ascending=False))
+    rn.columns = ["缺失数"]
+    
+    cn = pd.DataFrame(df.isnull().sum().sort_values(ascending=False))
+    cn.columns = ["缺失数"]
+    return rn,cn
+    
+rn,cn = row_col_missing(df)    
+```
+
+```python
 def plt_config():
     """
     设置画图的参数，包括字体、字号等
