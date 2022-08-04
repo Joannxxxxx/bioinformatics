@@ -1,5 +1,44 @@
 ## 高粱数据分析
 ```python
+def save_histgram(df,eng,filepath):  
+    """
+    绘制数据框每一列的直方图
+    df: 接收 pandas.DataFrame 数据格式，没有索引，每一列均为变量
+    eng: 性状表，包括性状对应的单位、英文全称、英文简称
+    filepath: 保存图片的文件夹路径，以斜杠结尾
+    """  
+    plt_config() # 设置画图的全局参数
+
+    cols = df.columns.tolist() # 画图
+    for col in cols:
+        sns.rugplot(df[col],color="k")
+        plt.hist(df[col], facecolor = "w",edgecolor="k")
+
+
+        t1 = eng.loc[col,"性状无单位"] # 标题三部分之一：性状，如株高
+        t2 = eng.loc[col,"单位数学格式"] # 标题三部分之二：单位，格式为 $(cm)$
+        t3 = eng.loc[col,"英文全称数学格式"] # 标题三部分之三：英文全称，格式为 $\mathrm{Plant\ height}$
+        
+        if col == "大小维管束平均面积比值":
+            title = t1 + "\n" + t3 # 特殊情况，性状没有单位
+        else:              
+            title = t1 + t2 + "\n" + t3 # 一般情况性状都有单位
+            
+        plt.title(title) # 添加标题
+    
+        plt.xlabel(None) # 去掉 xlabel
+        plt.xticks(fontproperties="Times new roman") # 设置 ticks 字体为 Times new roman
+        plt.yticks(fontproperties="Times new roman")
+       
+        col = col.replace('/', 'sub')
+        savepath = filepath + col + ".pdf" 
+        plt.savefig(savepath, bbox_inches = 'tight') # 保存图片
+
+        plt.show() # 展示图片
+```
+
+
+```python
 def plt_config():
     """
     设置画图的参数，包括字体、字号等
