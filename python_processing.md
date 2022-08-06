@@ -1,4 +1,23 @@
 ## 高粱数据分析
+
+```python
+def get_outliner_index(data,index,cols):
+    """
+    获得异常值的索引名/编号
+    :param data: 接收 pandas.DataFrame 数据格式
+    :param index: 索引所在列的名字
+    :param cols: 选择的性状
+    """  
+    out_dict = {}
+    for col in cols_num:
+        col = col + "比"
+        minimun,maximun = get_outliers(data[col],1.2)
+        pzbh_list = data[(data[col] < minimun) | (data[col] > maximun)][index].tolist() 
+        out_dict[col] = pzbh_list
+    #     out_dict[col] = {"outliners": pzbh_list}
+    return out_dict
+```
+
 ```python
 def text_plot(rvalue,xing):
         """
