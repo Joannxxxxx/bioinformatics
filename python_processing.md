@@ -1,5 +1,24 @@
 ## 高粱数据分析
 ```python
+def box_plot_outliers(data_ser, box_scale):
+        """
+        利用箱线图去除异常值
+        :param data_ser: 接收 pandas.Series 数据格式
+        :param box_scale: 箱线图尺度，一般为 1.5
+        """      
+        iqr = data_ser.quantile(0.75) - data_ser.quantile(0.25)
+        minimum = data_ser.quantile(0.25) - box_scale * iqr
+        maximum = data_ser.quantile(0.75) + box_scale * iqr
+        
+#         rule_low = (data_ser < minimum)
+#         rule_up = (data_ser > maximum)
+        outliers = (data_ser < minimum) | (data_ser > maximum)
+        
+#         errors.append({'K': k, 'RMSE': error})
+        threshold = {'minimum': minimum, 'maximun': maximum}
+        return (outliers,threshold)
+```
+```python
 def row_col_missing(df):
     """
     查看数据框行方向和列方向上的缺失情况
