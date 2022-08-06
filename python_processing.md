@@ -9,7 +9,7 @@ def get_outliner_index(data,index,cols):
     :param cols: 选择的性状
     """  
     out_dict = {}
-    for col in cols_num:
+    for col in cols:
         col = col + "比"
         minimun,maximun = get_outliers(data[col],1.2)
         pzbh_list = data[(data[col] < minimun) | (data[col] > maximun)][index].tolist() 
