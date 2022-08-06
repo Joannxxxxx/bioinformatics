@@ -1,11 +1,40 @@
 ## 高粱数据分析
-
+```python
+def text_plot(rvalue,xing):
+        """
+        相关系数在图上的位置
+        :param rvalue: 相关系数的数值
+        :param xing: 星号
+        """  
+    rvalue = str(round(rvalue,2)) # 取两位小数
+    words = "$r=" + "{" + rvalue + "}^" + xing + "$"
+    #         words = "$\mathrm{r=" + "{" + rvalue + "}^" + xing + "}$"
+    #         words = "$\mathrm{r=" + "{" + rvalue + "}^" + "{\star}" + "}$"
+    print(words)
+             #         plt.text(1, 1, equation,ha='center', va='center',transform=plt.gca().transAxes)  
+    plt.text(0.01, 0.88, words, fontsize=33, transform=plt.gca().transAxes)
+    
+def plot_r(rvalue):
+        """
+        相关系数对应的星号个数
+        :param rvalue: 相关系数的数值
+        """  
+    if abs(rvalue) > 0.402641: # 0.01 显著性水平的阈值
+        xing = "{**}"
+        text_plot(rvalue,xing)
+    elif abs(rvalue) > 0.312006: # 0.05 显著性水平的阈值
+        xing = "{*}"
+        text_plot(rvalue,xing)
+    else: # 不显著
+        xing = " "
+        text_plot(rvalue,xing)
+        
 def pair_cor(data,filepath,cols):
         """
         画两季性状两两之间的散点图，带相关系数
         :param data: 接收 pandas.DataFrame 数据格式
         :param filepath: 保存路径
-        :param cols: 选择
+        :param cols: 选择的性状
         """  
     for col in cols:
         xname = col + "_x"
@@ -24,7 +53,7 @@ def pair_cor(data,filepath,cols):
         plt.savefig(savepath, bbox_inches = 'tight') # 保存图片
 
         plt.show() # 展示图片
-
+```
 
 
 
