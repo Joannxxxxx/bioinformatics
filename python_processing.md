@@ -1,4 +1,33 @@
 ## 高粱数据分析
+
+def pair_cor(data,filepath,cols):
+        """
+        画两季性状两两之间的散点图，带相关系数
+        :param data: 接收 pandas.DataFrame 数据格式
+        :param filepath: 保存路径
+        :param cols: 选择
+        """  
+    for col in cols:
+        xname = col + "_x"
+        yname = col + "_y"
+        x = data.loc[:,xname]
+        y = data.loc[:,yname]
+
+        sns.regplot(xname,yname,data=data,color="b",scatter_kws={'alpha':0.3})
+
+        slope,intercept,rvalue,pvalue,stderr = scipy.stats.linregress(x = x, y = y)
+        print(rvalue)
+        plot_r(rvalue)
+
+        col = col.replace('/', 'sub')
+        savepath = filepath + col + ".pdf" 
+        plt.savefig(savepath, bbox_inches = 'tight') # 保存图片
+
+        plt.show() # 展示图片
+
+
+
+
 ```python
 def box_plot_outliers(data_ser, box_scale):
         """
