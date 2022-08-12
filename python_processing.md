@@ -94,8 +94,6 @@ def dropna_dropout_then_pair_cor(data,filepath,cols):
                          "remain_number":data.shape[0] - len(na_list) - len(pzbh_list)       
                         } # 把缺失情况和离群点情况记录入字典
         
-        drop_df = pd.DataFrame(drop_dict).T
-        
         # 5、在原数据上和同性状 xy 矩阵上删掉离群点
         tmp.loc[tmp["品种编号"].isin(pzbh_list),xname] = np.nan # 在原数据里把异常值删掉
         tmp.loc[tmp["品种编号"].isin(pzbh_list),yname] = np.nan
@@ -118,6 +116,8 @@ def dropna_dropout_then_pair_cor(data,filepath,cols):
         plt.savefig(savepath, bbox_inches = 'tight') # 保存图片
 
         plt.show() # 展示图片
+        
+    drop_df = pd.DataFrame(drop_dict).T
     return tmp,drop_df
 ```
 
