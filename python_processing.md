@@ -379,20 +379,6 @@ def string_split(string):
 ```
 
 ```python
-def col_row_missing(df):
-    """
-    统计行和列的缺失情况
-    df: 接收 pandas.DataFrame 数据格式，cols 都是变量
-    """   
-    rn = pd.DataFrame(df.isnull().sum(axis=1).sort_values(ascending=False))
-    rn.columns = ["缺失数"]
-    
-    cn = pd.DataFrame(df.isnull().sum().sort_values(ascending=False))
-    cn.columns = ["缺失数"]
-    return rn,cn
-```
-
-```python
 def optimize_k(data,target,number):
     """
     用 KNN 填充缺失时选择最佳 K 值
@@ -424,6 +410,24 @@ def optimize_k(data,target,number):
         errors.append({'K': k, 'RMSE': error})
         
     return errors
+    
+k_errors = optimize_k(data=d533, target='酸性洗涤纤维(%)_x',number=20)
+k_errors
+pf = pd.DataFrame(k_errors)
+import matplotlib.pyplot as plt
+plt.plot(pf["K"],pf["RMSE"])
+    
+def data_imputed(df,n):
+    """
+    用 KNN 填充缺失值
+    df: 接收 pandas.DataFrame 数据格式
+    """   
+    from sklearn.impute import KNNImputer
+
+    imputer = KNNImputer(n_neighbors=n)
+    imputed = imputer.fit_transform(df)
+    df_imputed = pd.DataFrame(imputed, columns=df.columns,index=df.index)
+    return df_imputed
 ```
 
 ```python
