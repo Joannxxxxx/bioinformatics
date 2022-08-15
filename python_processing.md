@@ -1,5 +1,40 @@
 ## 高粱数据分析
 ```python
+# 20220814 更新
+def data_standard(data):
+    """
+    标准化数据：减去均值再除以标准差
+    data：有 index 的 DataFrame
+    """  
+    from sklearn.preprocessing import scale
+    data_scaled = scale(data)
+    data_scaled = pd.DataFrame(data_scaled, columns=data.columns,index=data.index)
+    
+    return data_scaled
+
+def scale_and_cor_heatmap(data,pic_size,number_size,label_size):
+    # 标准化
+    data_scale = data_standard(data)
+    data_scale.head(2)
+
+    #皮尔森相关系数
+    pearson = data_scale.corr(method="pearson")
+    
+    plt_config(number_size)
+    g = sns.clustermap(pearson,
+                   cmap="vlag",
+    #                linewidths=.1,
+                   figsize=(pic_size, pic_size),               
+                   annot=True, 
+                   fmt="1.2f",
+                    center=0,
+                   cbar_kws={"shrink": 0.25,"pad":0.01,}
+                  )
+    g.ax_heatmap.set_xticklabels(g.ax_heatmap.get_xmajorticklabels(), fontsize = label_size)
+    g.ax_heatmap.set_yticklabels(g.ax_heatmap.get_ymajorticklabels(), fontsize = label_size)
+```
+
+```python
 # 20220812更新
 def get_outliers(data_ser, box_scale):
         """
