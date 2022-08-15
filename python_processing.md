@@ -31,6 +31,129 @@ def plot_rvalue_and_pvalue(rvalue,pval):
         xing = " "
         
     text_plot(rvalue,xing)
+
+# 20220814更新
+def plt_config(fontsize):
+    """
+    设置画图的参数，包括字体、字号等
+    """  
+    config = {
+        "font.family": "serif",  # 使用衬线体
+        "font.serif": ["SimHei"],  # 中易黑体
+#         "font.serif": ["SimSun"],  # 中易宋体，在我电脑上不行
+        "font.size": fontsize,  # 字号
+        "axes.unicode_minus": False, #  # 解决保存图像负号'-'显示为方块的问题
+        "mathtext.fontset": "stix",  # 设置 LaTeX 字体，stix 近似于 Times 字体
+        }
+    plt.rcParams.update(config)
+        
+def dropna_dropout_then_pair_cor(data,filepath,cols):
+    """
+    画两季性状两两之间的散点图，带相关系数
+    :param data: 接收 pandas.DataFrame 数据格式
+    :param filepath: 保存路径
+    :param cols: 选择的性状
+    """  
+    from scipy.stats import pearsonr
+    plt_config(25)
+    
+    tmp = data.copy()
+    drop_dict = {}
+    for col in cols:
+        # 1、把同性状拿出来
+        xname = col + "_x"
+        yname = col + "_y"
+        
+        ind = data["品种编号"]
+        x = data.loc[:,xname]
+        y = data.loc[:,yname]
+        xy = pd.concat([ind,x,y],axis=1) # 取出两年同性状的数据
+        
+        # 2、去掉缺失
+        xna_list = data[data[xname].isnull()]["品种编号"].tolist() # xcol 的缺失样本
+        yna_list = data[data[yname].isnull()]["品种编号"].tolist() # ycol 的缺失样本
+        na_list = list(set(xna_list + yna_list))
+        
+        xy_dropna = xy[~xy["品种编号"].isin(na_list)] # 删掉缺失样本后
+        
+        # 3、计算同性状比值
+        col_bi = col + "比"
+        xy_dropna[col_bi] = xy_dropna[yname] / xy_dropna[xname]
+        
+        # 4、对比值进行离群点筛查
+        minimun,maximun = get_outliers(xy_dropna[col_bi],1.5)
+        pzbh_list = xy_dropna[(xy_dropna[col_bi] < minimun) | (xy_dropna[col_bi] > maximun)]["品种编号"].tolist() # 离群点的编号
+        
+        drop_dict[col] = {"xna_list": xna_list,
+                          "xna_number":len(xna_list),
+                         "yna_list":yna_list,
+                          "yna_number":len(yna_list),
+                         "na_list":na_list,
+                          "na_number":len(na_list), 
+                          "outliners": pzbh_list,
+                         "outliners_number":len(pzbh_list),
+                         "remain_number":data.shape[0] - len(na_list) - len(pzbh_list)       
+                        } # 把缺失情况和离群点情况记录入字典
+        
+        # 5、在原数据上和同性状 xy 矩阵上删掉离群点
+        tmp.loc[tmp["品种编号"].isin(pzbh_list),xname] = np.nan # 在原数据里把异常值删掉
+        tmp.loc[tmp["品种编号"].isin(pzbh_list),yname] = np.nan
+        xy_dropna_dropout = xy_dropna[~xy_dropna["品种编号"].isin(pzbh_list)] # 在单独拿出的同性状数据里删掉离群点
+        xy_dropna_dropout = xy_dropna_dropout.set_index("品种编号")
+        
+        # 6、计算相关系数并画图
+        sns.regplot(xname,yname,data=xy_dropna_dropout,color="b",scatter_kws={'alpha':0.3})
+        
+        xy_corr = xy_dropna_dropout.corr(method="pearson") # 计算相关系数矩阵
+        rvalue = xy_corr.iloc[0,1]
+        rvalue = round(rvalue,2) # 提取相关系数
+        pval_matrix = xy_dropna_dropout.corr(method=lambda x, y: pearsonr(x, y)[1]) - np.eye(len(xy.columns)) # 计算 p 值矩阵
+        pval = pval_matrix.iloc[0,1] # 提取 p 值
+        plot_rvalue_and_pvalue(rvalue,pval) # 写上相关系数和显著性水平
+
+        
+        col = col.replace('/', 'sub')
+        savepath = filepath + col + ".pdf" 
+        plt.savefig(savepath, bbox_inches = 'tight') # 保存图片
+
+        plt.show() # 展示图片
+        
+    drop_df = pd.DataFrame(drop_dict).T
+    return tmp,drop_df
+```
+
+```python
+# 20220812更新
+def get_outliers(data_ser, box_scale):
+        """
+        获得异常值的上下边界
+        :param data_ser: 接收 pandas.Series 数据格式
+        :param box_scale: 箱线图尺度，一般为 1.5
+        """      
+        iqr = data_ser.quantile(0.75) - data_ser.quantile(0.25)
+        minimum = data_ser.quantile(0.25) - box_scale * iqr
+        maximum = data_ser.quantile(0.75) + box_scale * iqr
+
+        return (minimum,maximum)
+    
+def text_plot(rvalue,xing):
+    rvalue = str(round(rvalue,2)) # 取两位小数
+    words = "$r=" + "{" + rvalue + "}^" + xing + "$"
+    #         words = "$\mathrm{r=" + "{" + rvalue + "}^" + xing + "}$"
+    #         words = "$\mathrm{r=" + "{" + rvalue + "}^" + "{\star}" + "}$"
+    print(words)
+             #         plt.text(1, 1, equation,ha='center', va='center',transform=plt.gca().transAxes)  
+    plt.text(0.01, 0.88, words, fontsize=30, transform=plt.gca().transAxes)
+    
+def plot_rvalue_and_pvalue(rvalue,pval):
+    if pval < 0.01:
+        xing = "{**}"
+    elif pval < 0.05:
+        xing = "{*}"
+    else:
+        xing = " "
+        
+    text_plot(rvalue,xing)
     
 def plt_config():
     """
