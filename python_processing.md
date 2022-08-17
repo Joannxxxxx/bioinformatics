@@ -329,59 +329,55 @@ def get_outliner_index(data,index,cols):
 ```
 
 ```python
+# 20220816 更新
 def text_plot(rvalue,xing):
-        """
-        相关系数在图上的位置
-        :param rvalue: 相关系数的数值
-        :param xing: 星号
-        """  
     rvalue = str(round(rvalue,2)) # 取两位小数
     words = "$r=" + "{" + rvalue + "}^" + xing + "$"
     #         words = "$\mathrm{r=" + "{" + rvalue + "}^" + xing + "}$"
     #         words = "$\mathrm{r=" + "{" + rvalue + "}^" + "{\star}" + "}$"
     print(words)
              #         plt.text(1, 1, equation,ha='center', va='center',transform=plt.gca().transAxes)  
-    plt.text(0.01, 0.88, words, fontsize=33, transform=plt.gca().transAxes)
-    
-def plot_r(rvalue):
-        """
-        相关系数对应的星号个数
-        :param rvalue: 相关系数的数值
-        """  
-    if abs(rvalue) > 0.402641: # 0.01 显著性水平的阈值
+    plt.text(0.01, 0.88, words, fontsize=30, transform=plt.gca().transAxes)
+
+def plot_rvalue_and_pvalue(rvalue,pval):
+    if pval < 0.01:
         xing = "{**}"
-        text_plot(rvalue,xing)
-    elif abs(rvalue) > 0.312006: # 0.05 显著性水平的阈值
+    elif pval < 0.05:
         xing = "{*}"
-        text_plot(rvalue,xing)
-    else: # 不显著
-        xing = " "
-        text_plot(rvalue,xing)
-        
+    else:
+        xing = " "     
+    text_plot(rvalue,xing)
+
 def pair_cor(data,filepath,cols):
-        """
-        画两季性状两两之间的散点图，带相关系数
-        :param data: 接收 pandas.DataFrame 数据格式
-        :param filepath: 保存路径
-        :param cols: 选择的性状
-        """  
+    """
+    画两季性状两两之间的散点图，带相关系数
+    :param data: 接收 pandas.DataFrame 数据格式
+    :param filepath: 保存路径
+    :param cols: 选择的性状
+    """  
     for col in cols:
         xname = col + "_x"
         yname = col + "_y"
         x = data.loc[:,xname]
         y = data.loc[:,yname]
+        xy = pd.concat([x,y],axis=1) # 取出两年同性状的数据
 
         sns.regplot(xname,yname,data=data,color="b",scatter_kws={'alpha':0.3})
-
-        slope,intercept,rvalue,pvalue,stderr = scipy.stats.linregress(x = x, y = y)
-        print(rvalue)
-        plot_r(rvalue)
+        
+        
+        from scipy.stats import pearsonr
+        xy_corr = xy.corr(method="pearson") # 计算相关系数矩阵
+        rvalue = xy_corr.iloc[0,1] # 提取相关系数
+        pval_matrix = xy.corr(method=lambda x, y: pearsonr(x, y)[1]) - np.eye(len(xy.columns)) # 计算 p 值矩阵
+        pval = pval_matrix.iloc[0,1] # 提取 p 值
+        print(rvalue,pval)
+        plot_rvalue_and_pvalue(rvalue,pval) # 写上相关系数和显著性水平
 
         col = col.replace('/', 'sub')
         savepath = filepath + col + ".pdf" 
         plt.savefig(savepath, bbox_inches = 'tight') # 保存图片
 
-        plt.show() # 展示图片
+        plt.show() # 展示图片 
 ```
 
 
