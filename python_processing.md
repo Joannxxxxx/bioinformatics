@@ -734,7 +734,7 @@ def make_cluster(data,n_clusters):
     
     data_new = data.copy()
     data_new["cluster"] = cluster_res
-    data_new["cluster"] = data["cluster"] + 1
+    data_new["cluster"] = data_new["cluster"] + 1
     
     return data_new
 ```
