@@ -732,10 +732,11 @@ def make_cluster(data,n_clusters):
     cluster = AgglomerativeClustering(n_clusters=n_clusters,linkage='ward',affinity='euclidean')  
     cluster_res = cluster.fit_predict(data_scaled)
     
-    data["cluster"] = cluster_res
-    data["cluster"] = data["cluster"] + 1
+    data_new = data.copy()
+    data_new["cluster"] = cluster_res
+    data_new["cluster"] = data["cluster"] + 1
     
-    return data
+    return data_new
 ```
 
 ```python
